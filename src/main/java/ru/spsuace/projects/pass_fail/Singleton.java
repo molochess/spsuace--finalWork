@@ -6,6 +6,8 @@ package ru.spsuace.projects.pass_fail;
  * Так же важно, чтобы объект был создан только один раз и метод getInstance() всегда возвращал один и тот же объект.
  *
  * getInstance может вызываться из многих потоков одновременно.
+ *
+ * НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ AtomicReference
  */
 public class Singleton {
 
