@@ -1,7 +1,6 @@
 package ru.spsuace.projects.pass_fail.map;
 
 
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Реализовать контейнер для мапы. Сам класс ClosableMap считается потокобезопасным и с ним проблем нет. Его НЕ трогать.
@@ -16,39 +15,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ContainerMap {
 
-    private final AtomicBoolean closeCheck = new AtomicBoolean(false);
-    private ClosableMap map = new ClosableMap();
-
-    /**
-     * Нельзя, чтобы вызывались методы map после вызова map.close(). В этом случае можно вернуть null
-     */
-    public Long put(Long key, Long value) {
-        synchronized (ContainerMap.class) {
-            if (closeCheck.get() == false) {
-                return map.put(key, value);
-            }
-        }
-        return null;
-    }
 
 
-    /**
-     * Нельзя, чтобы вызывались методы map после вызова map.close(). В этом случае можно вернуть null
-     */
-    public Long get(Long key) {
-        synchronized (ContainerMap.class) {
-            if (closeCheck.get() == false) {
-                return map.get(key);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Считаем, что метод вызывается только один раз
-     */
-    public void close() {
-        map.close();
-        closeCheck.compareAndSet(false, true);
-    }
 }
